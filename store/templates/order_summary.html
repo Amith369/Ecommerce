@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+        {%for o in data%}
+
+            {%for oi in o.get_order_items%}
+                {{oi.basket_item_object.product_object.title}}
+                {{oi.basket_item_object.product_object.image.url}}
+                {{oi.basket_item_object.qty}}
+                {{oi.basket_item_object.size_object}}
+                {{oi.basket_item_object.item_total}}
+                {{o.id}}
+                {{o.delivery_address}}
+                {{o.total}}
+                {{o.is_paid}}
+            {%endfor%}
+
+        {%endfor%}
+</body>
+</html>

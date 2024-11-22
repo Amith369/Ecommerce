@@ -1,0 +1,74 @@
+{%extends 'base.html'%}
+
+
+
+
+{%block main_block%}
+{{request.user.cart.cart_item_count}}
+{{msg}}
+<div class="container-md cart">
+    <table>
+      <tr>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Subtotal</th>
+      </tr>
+      <!-- iterate start -->
+     {%for bi in data%}
+     <tr>
+        <td>
+          <div class="cart-info">
+            <img src="{{bi.product_object.image.url}}" alt="">
+            <div>
+              <p>Boy’s T-Shirt</p>
+              <span>Price: {{bi.product_object.price}}</span>
+              <br />
+              <a href="{%url 'basket-item-remove' bi.id%}">remove</a>
+            </div>
+          </div>
+        </td>
+        <td>
+        
+          <div class="mb-2 flex">
+            <div class="min-w-24 flex">
+              <form method="post" action="{%url 'edit-cart-qty' bi.id%}" >
+                {%csrf_token%}
+                {%if bi.qty > 1%}
+                <button type="submit" class="py-2 btn btn-dark" name="counterButton" value="-">
+                  -
+                </button>
+                {%endif%}
+                <input
+                  type="text"
+                  class="mx-1 h-7 w-9 rounded-md border text-center"
+                  value="{{bi.qty}}"
+                  disabled
+                />
+                <button
+                  type="submit"
+                  class="py-2 btn btn-dark"
+                  name="counterButton"
+                  value="+"
+                >
+                  +
+                </button>
+              </form>
+            </div>
+        
+        </td>
+        <td>{{bi.item_total}}</td>
+      </tr>
+     {%endfor%}
+      <!-- iterate ends -->
+    </table>
+    <div class="total-price">
+      <table>
+        <tr>
+          <td>Subtotal</td>
+          <td>₹ {{request.user.cart.basket_total}}</td>
+        </tr>
+      </table>
+      <a href="{%url 'checkout'%}" class="checkout btn">Proceed To Checkout</a>
+    </div>
+  </div>
+{%endblock%}
